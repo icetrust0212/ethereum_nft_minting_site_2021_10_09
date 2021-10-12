@@ -24,6 +24,7 @@ contract MyNFT is ERC721Tradable {
         _setBaseURI(_metadataUri);
         _setContractURI(_contractUri);
         _setTokenAmount(_tokenAmount);
+        setMintPrice(0.03 * 10 ** 18);
     }
 
     

@@ -29,3 +29,9 @@ export const setChainId = (chainId) => {
         chainId
     }
 }
+
+export const getMintPrice = () => {
+    return {
+        type: web3Constants.GET_MINT_PRICE
+    }
+}

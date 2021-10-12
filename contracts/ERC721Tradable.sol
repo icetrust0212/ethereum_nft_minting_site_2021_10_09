@@ -45,7 +45,10 @@ abstract contract ERC721Tradable is
     uint256 public randomResult;
     uint256[] internal tokenIds;
 
+    uint public mintPrice;
     mapping(bytes32 => address) requestToSender;
+
+    event MintPriceSet(uint newPrice);
 
     modifier lessThanTotalAmount(uint256 amount) {
         require(
@@ -86,9 +89,11 @@ abstract contract ERC721Tradable is
 
     function requestRandomNFT(address _to, uint8 amount)
         public
+        payable
         lessThanTotalAmount(amount)
         limitAmountPerTx(amount)
     {
+        require(msg.value >= amount * mintPrice, "Not enough ETH sent; check price!"); 
         require(
             LINK.balanceOf(address(this)) >= fee * amount,
             "Not enough LINK - fill contract with faucet"
@@ -238,5 +243,14 @@ abstract contract ERC721Tradable is
         uint256 index = randomness % tokenIds.length;
         address _to = requestToSender[requestId];
         mintTo(_to, tokenIds[index]);
+    }
+
+    function setMintPrice(uint _price) public onlyOwner{
+        mintPrice = _price;
+        emit MintPriceSet(mintPrice);
+    }
+
+    function getMintPrice() public view returns(uint) {
+        return mintPrice;
     }
 }

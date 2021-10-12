@@ -6,7 +6,7 @@ import { resetWeb3Provider, setAddress, setChainId, setWeb3Provider } from '../s
 import { useDispatch, useSelector } from 'react-redux';
 import { web3ProviderOptions } from '../config'
 import { getAddress, getChainId, getProvider, getWeb3Provider } from '../store/reducers'
-import {mintNFT} from '../lib/nftutils';
+import { mintNFT, web3, nftContract, withdrawEth } from '../lib/nftutils';
 
 let web3Modal: any;
 if (typeof window !== 'undefined') {
@@ -36,7 +36,7 @@ export const Home = (): JSX.Element => {
 
     const signer = web3Provider.getSigner()
     const address = await signer.getAddress()
-    
+
     const network = await web3Provider.getNetwork();
     console.log("address: ", address)
 
@@ -57,9 +57,13 @@ export const Home = (): JSX.Element => {
   )
 
   const mint = useCallback(() => {
-    mintNFT( address, 3).then(res => console.log('mint success: ', res)).catch(e => {
+    mintNFT(address, 0.02, 1).then(res => console.log('mint success: ', res)).catch(e => {
       console.log('mint error: ', e);
     });
+  }, [provider]);
+
+  const withdraw = useCallback(() => {
+    withdrawEth(address);
   }, [provider])
 
   // Auto connect to the cached provider
@@ -146,8 +150,9 @@ export const Home = (): JSX.Element => {
           </button>
         )}
         <button className="btn btn-mint" onClick={mint}>Mint</button>
+        <button className="btn btn-withdraw" onClick={withdraw}>Withdraw</button>
       </main>
-     </div>
+    </div>
   )
 }
 

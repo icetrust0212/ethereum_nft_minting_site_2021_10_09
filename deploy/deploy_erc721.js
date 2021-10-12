@@ -132,21 +132,21 @@ const func = async function (hre) {
   console.log('tokenAmount: ', tokenAmount);
   console.log("------")
 
-  await deploy('MyNFT', {
-    from: deployer,
-    args: [
-      proxyRegistryAddress,
-      contractUri,
-      baseMetadataUri,
-      contractName,
-      contractSymbol,
-      tokenAmount,
-      VRFCoordinator,
-      LinkToken,
-      keyhash
-    ],
-    log: true
-  });
+  // await deploy('MyNFT', {
+  //   from: deployer,
+  //   args: [
+  //     proxyRegistryAddress,
+  //     contractUri,
+  //     baseMetadataUri,
+  //     contractName,
+  //     contractSymbol,
+  //     tokenAmount,
+  //     VRFCoordinator,
+  //     LinkToken,
+  //     keyhash
+  //   ],
+  //   log: true
+  // });
 };
 
 module.exports = func;

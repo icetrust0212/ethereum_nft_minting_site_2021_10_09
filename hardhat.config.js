@@ -37,7 +37,7 @@ module.exports = {
       url: process.env.API_URL_KOVAN,
       accounts: [`0x${ACCOUNT_PRIVATE_KEY}`],
     },
-    rinkby: {
+    rinkeby: {
       url: process.env.API_URL_RINKBY,
       accounts: [`0x${ACCOUNT_PRIVATE_KEY}`],
     }
