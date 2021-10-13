@@ -33,12 +33,15 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
 
     //state variable for VRF
     mapping(bytes32 => address) requestToSender;
+    
+    //whitelist
+    mapping(address => bool) whiteList;
 
     bool private PAUSE = false;
     string public baseTokenURI;
 
     event PauseEvent(bool pause);
-    event welcomeToMekaVerse(uint256 indexed id);
+    event welcomeToNFT(uint256 indexed id);
 
     constructor(
         string memory baseURI,
@@ -56,7 +59,7 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
 
     modifier saleIsOpen() {
         require(remainTokenCount() >= 0, "Soldout!");
-        require(!PAUSE, "Sales not open");
+        require(!PAUSE && !whiteList[msg.sender], "Sales not open");
         _;
     }
 
@@ -124,7 +127,7 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
     function _mintAnElement(address _to, uint256 _tokenId) private {
         _safeMint(_to, _tokenId);
 
-        emit welcomeToMekaVerse(_tokenId);
+        emit welcomeToNFT(_tokenId);
     }
 
     function price(uint256 _count) public pure returns (uint256) {
@@ -149,6 +152,10 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
     function setPause(bool _pause) public onlyOwner {
         PAUSE = _pause;
         emit PauseEvent(PAUSE);
+    }
+
+    function getPause() public view returns(bool) {
+        return PAUSE;
     }
 
     function withdrawAll() public onlyOwner {
@@ -223,5 +230,19 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
         tokenIds[index] = tokenIds[tokenIds.length - 1];
         // Remove the last element
         tokenIds.pop();
+    }
+
+    //add whitelist
+    function addWhiteList(address _address) public onlyOwner {
+        require(!whiteList[_address], "Already Added");
+        whiteList[_address] = true;
+    }
+    function isWhiteList(address _address) public view onlyOwner returns(bool) {
+        return whiteList[_address];
+    }
+    //remove whitelist
+    function removeWhiteList(address _address) public onlyOwner {
+        require(whiteList[_address], "Already removed");
+        whiteList[_address] = false;
     }
 }

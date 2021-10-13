@@ -32,25 +32,21 @@ describe("NFT contract", function () {
   let VRFCoordinator = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9";
   let LinkToken = "0xa36085F69e2889c224210F603D836748e7dC0088";
   let keyhash = "0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4";
-  let contractName = "MyNFT";
-  let contractSymbol = "NFT";
+  let contractName = "Iceberg";
+  let contractSymbol = "ICE";
   let tokenAmount = 6;
   // `beforeEach` will run before each test, re-deploying the contract every
   // time. It receives a callback, which can be async.
   beforeEach(async function () {
     // Get the ContractFactory and Signers here.
-    Token = await ethers.getContractFactory("MyNFT");
+    Token = await ethers.getContractFactory("Iceberg");
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
 
     // To deploy our contract, we just have to call Token.deploy() and await
     // for it to be deployed(), which happens once its transaction has been
     // mined.
     hardhatToken = await Token.deploy(
-      proxyAddress,
-      contractUri,
       metadataUri,
-      contractName,
-      contractSymbol,
       tokenAmount,
       VRFCoordinator,
       LinkToken,

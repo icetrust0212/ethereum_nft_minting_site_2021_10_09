@@ -1012,8 +1012,8 @@
       ]
     },
     "D:\\projects\\blockchain\\works\\ethereum-nft-minting-site-2021-10-09\\contracts\\NFT.sol": {
-      "lastModificationDate": 1633997567448,
-      "contentHash": "0bf808392c736d964e9410a283916f98",
+      "lastModificationDate": 1634102753863,
+      "contentHash": "ab90452f1c8a6d8199538236f90f0ae9",
       "sourceName": "contracts/NFT.sol",
       "solcConfig": {
         "version": "0.8.4",

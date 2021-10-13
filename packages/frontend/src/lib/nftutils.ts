@@ -64,3 +64,39 @@ export async function withdrawEth(address: string) {
   });
   await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
 }
+
+export async function setPause(address: string, value: boolean) {
+  const tx = {
+    'from': address,
+    'to': CONTRACT_ADDRESS,
+    'data': nftContract.methods.setPause(value + "").encodeABI()
+  };
+  web3.eth.sendTransaction(tx, (e: any) => {
+    console.log(e);
+  });
+  await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
+}
+
+export async function addWhiteList(address: string, _address: string) {
+  const tx = {
+    'from': address,
+    'to': CONTRACT_ADDRESS,
+    'data': nftContract.methods.addWhiteList(_address).encodeABI()
+  };
+  web3.eth.sendTransaction(tx, (e: any) => {
+    console.log(e);
+  });
+  await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
+}
+
+export async function removeWhiteList(address: string, _address: string) {
+  const tx = {
+    'from': address,
+    'to': CONTRACT_ADDRESS,
+    'data': nftContract.methods.removeWhiteList(_address).encodeABI()
+  };
+  web3.eth.sendTransaction(tx, (e: any) => {
+    console.log(e);
+  });
+  await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
+}
