@@ -1,9 +1,9 @@
 {
-  "name": "hardhat",
-  "chainId": "31337",
+  "name": "rinkeby",
+  "chainId": "4",
   "contracts": {
     "Iceberg": {
-      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "address": "0x086f038C4c499F6c55366a61cEb80D57B94379B3",
       "abi": [
         {
           "inputs": [

@@ -15,6 +15,7 @@
     "deploy:ropsten": "yarn contract:clean && hardhat deploy --network ropsten --export packages/frontend/src/contracts.json",
     "deploy:rinkeby": "yarn contract:clean && hardhat deploy --network rinkeby --export packages/frontend/src/contracts.json",
     "start": "yarn workspace @nft-minter/frontend start",
+    "build": "yarn workspace @nft-minter/frontend build",
     "contract:clean": "hardhat clean && rimraf deployments/ && rimraf packages/client/src/contracts.json && rimraf packages/frontend/src/contracts.json"
   },
   "author": "",

@@ -65,7 +65,7 @@ export async function withdrawEth(address: string) {
   await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
 }
 
-export async function setPause(address: string, value: boolean) {
+export async function setPauseSell(address: string, value: boolean) {
   const tx = {
     'from': address,
     'to': CONTRACT_ADDRESS,

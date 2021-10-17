@@ -8,7 +8,9 @@ import { ToastProvider } from 'react-toast-notifications';
 import buildStore from './store'
 import { Provider } from 'react-redux'
 
-import App from './pages/Home';
+// import App from './pages/Home';
+import App from './App';
+import './assets/scss/style.scss';
 
 declare global {
   interface Window {
@@ -19,13 +21,13 @@ declare global {
 const store = buildStore(null, window.REDUX_DATA || undefined)
 ReactDOM.render(
   <React.StrictMode>
-   <Provider store={store}>
-    <BrowserRouter>
-      <ToastProvider>
-        <App />
-      </ToastProvider>
-    </BrowserRouter>
-  </Provider>,
+    <Provider store={store}>
+      <BrowserRouter>
+        <ToastProvider>
+            <App />
+        </ToastProvider>
+      </BrowserRouter>
+    </Provider>,
   </React.StrictMode>,
   document.getElementById('root')
 );
