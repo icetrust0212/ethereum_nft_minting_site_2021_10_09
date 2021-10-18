@@ -35,3 +35,9 @@ export const getMintPrice = () => {
         type: web3Constants.GET_MINT_PRICE
     }
 }
+
+export const setWeb3 = () => {
+    return {
+        
+    }
+}

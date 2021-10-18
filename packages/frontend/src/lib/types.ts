@@ -170,7 +170,7 @@ export type StateType = {
   provider?: any
   web3Provider?: any
   address?: string | undefined
-  chainId?: number | undefined
+  chainId?: number | undefined,
 }
 
 export type ActionType =

@@ -1012,8 +1012,8 @@
       ]
     },
     "D:\\projects\\blockchain\\works\\ethereum-nft-minting-site-2021-10-09\\contracts\\NFT.sol": {
-      "lastModificationDate": 1634102753863,
-      "contentHash": "ab90452f1c8a6d8199538236f90f0ae9",
+      "lastModificationDate": 1634525600081,
+      "contentHash": "c592a8e6575c30310c8efcf477ca2218",
       "sourceName": "contracts/NFT.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -1061,7 +1061,7 @@
       ]
     },
     "D:\\projects\\blockchain\\works\\ethereum-nft-minting-site-2021-10-09\\contracts\\ERC721Enumerable.sol": {
-      "lastModificationDate": 1633983490559,
+      "lastModificationDate": 1634267503396,
       "contentHash": "09f9ff3315f34be2f2de118160815d88",
       "sourceName": "contracts/ERC721Enumerable.sol",
       "solcConfig": {
@@ -1234,7 +1234,7 @@
       ]
     },
     "D:\\projects\\blockchain\\works\\ethereum-nft-minting-site-2021-10-09\\contracts\\ERC721.sol": {
-      "lastModificationDate": 1634223450433,
+      "lastModificationDate": 1634267503440,
       "contentHash": "c823195a254a709fdf03568110488f8d",
       "sourceName": "contracts/ERC721.sol",
       "solcConfig": {

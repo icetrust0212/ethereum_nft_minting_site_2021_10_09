@@ -41,7 +41,11 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
     string public baseTokenURI;
 
     event PauseEvent(bool pause);
-    event welcomeToNFT(uint256 indexed id);
+    event welcomeToNFT(address indexed _to , uint256 id);
+    event AddedWhiteList(address indexed _to, address _address);
+    event RemovedWhiteList(address indexed _to, address _address);
+    event RemainTokenCount(uint256 _count);
+    event SoldOut();
 
     constructor(
         string memory baseURI,
@@ -117,6 +121,13 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
         uint256 index = randomness % tokenIds.length;
         address _to = requestToSender[requestId];
         mint(_to, tokenIds[index]);
+        uint256 _count = remainTokenCount();
+        if (_count > 0) {
+            emit RemainTokenCount(_count);
+        } else {
+            emit SoldOut();
+        }
+
     }
 
     function mint(address _to, uint256 _tokenId) private {
@@ -126,8 +137,7 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
 
     function _mintAnElement(address _to, uint256 _tokenId) private {
         _safeMint(_to, _tokenId);
-
-        emit welcomeToNFT(_tokenId);
+        emit welcomeToNFT(_to, _tokenId);
     }
 
     function price(uint256 _count) public pure returns (uint256) {
@@ -236,6 +246,7 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
     function addWhiteList(address _address) public onlyOwner {
         require(!whiteList[_address], "Already Added");
         whiteList[_address] = true;
+        emit AddedWhiteList(owner() ,_address);
     }
     function isWhiteList(address _address) public view onlyOwner returns(bool) {
         return whiteList[_address];
@@ -244,5 +255,6 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
     function removeWhiteList(address _address) public onlyOwner {
         require(whiteList[_address], "Already removed");
         whiteList[_address] = false;
+        emit RemovedWhiteList(owner(), _address);
     }
 }

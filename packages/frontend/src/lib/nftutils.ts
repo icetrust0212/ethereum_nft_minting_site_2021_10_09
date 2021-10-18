@@ -1,41 +1,6 @@
-require('dotenv').config();
-const CONTRACT_INFO = require('../contracts.json');
-const NETWORK = CONTRACT_INFO.chainId;
-const CONTRACT_ABI = CONTRACT_INFO.contracts.Iceberg.abi;
-const CONTRACT_ADDRESS = CONTRACT_INFO.contracts.Iceberg.address;
+import { config } from "../config";
 
-const MAINNET = "1"
-const ROPSTEN = "3";
-const RINKBY = "4";
-const KOVAN = "42";
-
-let API_URL;
-const {REACT_APP_API_URL_MAINNET, REACT_APP_API_URL_KOVAN, REACT_APP_API_URL_ROPSTEN, REACT_APP_API_URL_RINKBY} = process.env;
-switch(NETWORK) {
-  case MAINNET:
-    API_URL = REACT_APP_API_URL_MAINNET;
-    break;
-  case KOVAN:
-    API_URL = REACT_APP_API_URL_KOVAN;
-    break;
-  case RINKBY:
-    API_URL = REACT_APP_API_URL_RINKBY;
-    break;
-  case ROPSTEN:
-    API_URL = REACT_APP_API_URL_ROPSTEN;
-    break;
-}
-
-const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
-export const web3 = createAlchemyWeb3(API_URL);
-
-
-export const nftContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-
-export async function mintNFT(address: string, mintPricePerToken: number, amount: number = 1) {
-  console.log('address: ', address)
-  
-  const nonce = await web3.eth.getTransactionCount(address, 'latest'); //get latest nonce
+export async function mintNFT(web3: any, nftContractInstance: any,  address: string, CONTRACT_ADDRESS: string, mintPricePerToken: number, amount: number = 1) {
   // const price = await nftContract.methods.getMintPrice();
   // console.log('price: ', price);
   const priceWei = web3.utils.toWei(mintPricePerToken * amount + "", "ether"); // Convert to wei value
@@ -46,57 +11,53 @@ export async function mintNFT(address: string, mintPricePerToken: number, amount
     'gas': 500000,
     "value": priceWei,
     'maxPriorityFeePerGas': 1999999987,
-    'data': nftContract.methods.requestRandomNFT(address, amount).encodeABI()
+    'data': nftContractInstance.methods.requestRandomNFT(address, amount).encodeABI()
   };
-  web3.eth.sendTransaction(tx, (e: any) => {
+  await web3.eth.sendTransaction(tx, (e: any) => {
     console.log(e);
   });
 }
 
-export async function withdrawEth(address: string) {
+export async function withdrawEth(web3: any, nftContractInstance: any, CONTRACT_ADDRESS: string) {
   const tx = {
-    'from': address,
+    'from': config.PUBLIC_KEY,
     'to': CONTRACT_ADDRESS,
-    'data': nftContract.methods.withdrawAll().encodeABI()
+    'data': nftContractInstance.methods.withdrawAll().encodeABI()
   };
-  web3.eth.sendTransaction(tx, (e: any) => {
+  await web3.eth.sendTransaction(tx, (e: any) => {
     console.log(e);
   });
-  await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
 }
 
-export async function setPauseSell(address: string, value: boolean) {
+export async function setPauseSell(web3: any, nftContractInstance: any, CONTRACT_ADDRESS: string, value: boolean) {
   const tx = {
-    'from': address,
+    'from': config.PUBLIC_KEY,
     'to': CONTRACT_ADDRESS,
-    'data': nftContract.methods.setPause(value + "").encodeABI()
+    'data': nftContractInstance.methods.setPause(value + "").encodeABI()
   };
-  web3.eth.sendTransaction(tx, (e: any) => {
+  await web3.eth.sendTransaction(tx, (e: any) => {
     console.log(e);
   });
-  await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
 }
 
-export async function addWhiteList(address: string, _address: string) {
+export async function addWhiteList(web3: any, nftContractInstance: any, CONTRACT_ADDRESS: string, _address: string) {
   const tx = {
-    'from': address,
+    'from': config.PUBLIC_KEY,
     'to': CONTRACT_ADDRESS,
-    'data': nftContract.methods.addWhiteList(_address).encodeABI()
+    'data': nftContractInstance.methods.addWhiteList(_address).encodeABI()
   };
-  web3.eth.sendTransaction(tx, (e: any) => {
+  await web3.eth.sendTransaction(tx, (e: any) => {
     console.log(e);
   });
-  await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
 }
 
-export async function removeWhiteList(address: string, _address: string) {
+export async function removeWhiteList(web3: any, nftContractInstance: any, CONTRACT_ADDRESS: string, _address: string) {
   const tx = {
-    'from': address,
+    'from': config.PUBLIC_KEY,
     'to': CONTRACT_ADDRESS,
-    'data': nftContract.methods.removeWhiteList(_address).encodeABI()
+    'data': nftContractInstance.methods.removeWhiteList(_address).encodeABI()
   };
-  web3.eth.sendTransaction(tx, (e: any) => {
+  await web3.eth.sendTransaction(tx, (e: any) => {
     console.log(e);
   });
-  await web3.eth.accounts.signTransaction(tx, `0x${process.env.REACT_APP_ACCOUNT_PRIVATE_KEY}`);
 }
