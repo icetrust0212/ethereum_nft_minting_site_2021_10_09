@@ -1,8 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { useLocation, Switch } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ScrollReveal from './utils/ScrollReveal';
-import ReactGA from 'react-ga';
 
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
@@ -40,6 +39,8 @@ const App = () => {
         break;
       case 'error':
         NotificationManager.error(msg, title, duration);
+        break;
+      default:
         break;
     };
   };

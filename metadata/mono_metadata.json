@@ -4,52 +4,52 @@
     {
       "description": "URI for the API for NFTs. TMI!",
       "external_link": "https://github.com/alto-io/nft-minter",
-      "image": "smile37.png",
+      "image": "rabbit0.jpg",
       "name": "Tokens created by nft-minter",
       "symbol": "NFT"
     },
     "metadata": [
         {
           "id": "0",
-          "name": "smile37",
+          "name": "rabbit0",
           "icon": "🤖",
           "description": "Just an emoji: 🤖",
-          "image": "smile37.png"
+          "image": "rabbit0.jpg"
         },      
         {
           "id": "1",
-          "name": "smile32",
+          "name": "rabbit1",
           "icon": "🤡",
           "description": "Just an emoji: 🤡",
-          "image": "smile32.png"
+          "image": "rabbit1.jpg"
         },
         {
           "id": "2",
-          "name": "smile33",
+          "name": "rabbit3",
           "icon": "💩",
           "description": "Just an emoji: 💩",
-          "image": "smile33.png"
+          "image": "rabbit3.jpg"
         },
         {
           "id": "3",
-          "name": "smile34",
+          "name": "rabbit4",
           "icon": "👻",
           "description": "Just an emoji: 👻",
-          "image": "smile34.png"
+          "image": "rabbit4.jpg"
         },                        
         {
           "id": "4",
-          "name": "smile38",
+          "name": "rabbit6",
           "icon": "🎃",
           "description": "Just an emoji: 🎃",
-          "image": "smile38.png"
+          "image": "rabbit6.jpg"
         },
         {
           "id": "5",
-          "name": "smile36",
+          "name": "rabbit5",
           "icon": "👽",
           "description": "Just an emoji: 👽",
-          "image": "smile36.png"
+          "image": "rabbit5.jpg"
         }
     ]    
 }

@@ -6,22 +6,27 @@ import { mintNFT, withdrawEth, addWhiteList, removeWhiteList, setPauseSell } fro
 import NumericInput from 'react-numeric-input';
 import '../assets/scss/mint.scss';
 import { config } from '../config'
+import CustomButton from '../components/Button/Button';
 
 export const MintPage = ({handleNotification}: PropsType): JSX.Element => {
   const provider = useSelector(state => getProvider(state));
   const address = useSelector(state => getAddress(state));
-  const chainId = useSelector(state => getChainId(state));
+  // const chainId = useSelector(state => getChainId(state));
   const web3Instance = useSelector(state => getWeb3Instance(state));
-  const wssWeb3Instance = useSelector(state => getWSSWeb3Instance(state));
+  // const wssWeb3Instance = useSelector(state => getWSSWeb3Instance(state));
   const nftContractInstance = useSelector(state => getNFTContractInstance(state));
   const wssNFTContractInstance = useSelector(state => getWSSNFTContractInstance(state));
   const contractAddress = useSelector(state => getContractAddress(state));
-  const contractABI = useSelector(state => getContractABI(state))
+  // const contractABI = useSelector(state => getContractABI(state))
 
   const [address1, setAddress1] = useState(''); // address that will be added whitelist
   const [address2, setAddress2] = useState(''); // address that will be removed whitelist 
   const [amount, setAmount] = useState(1);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [isSettingPause, setIsSettingPause] = useState(false);
+  const [isAddingWhitelist, setIsAddingWhitelist] = useState(false);
+  const [isRemovingWhitelist, setIsRemovingWhitelist] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const price = 0.02;
   const maxAmount = 20;
@@ -44,6 +49,7 @@ export const MintPage = ({handleNotification}: PropsType): JSX.Element => {
       console.log('Mint result: ', event, event.returnValues);
     }).on("error", (error: any) => {
       console.error("Mint Failed", error);
+      setIsMinting(false)
       handleNotification("error", 'NFT Mint is failed');
     });
 
@@ -57,6 +63,10 @@ export const MintPage = ({handleNotification}: PropsType): JSX.Element => {
     .on('data', (event: any) => {
       console.log('Minting Pause: ', event, event.returnValues);
       handleNotification('warning', `NFT minting ${event.returnValues.pause ? 'PAUSE' : 'RESUME'}`);
+      setIsSettingPause(false);
+    }).on('error', (error: any) => {
+      setIsSettingPause(false);
+      handleNotification('error', `Setting Pause/Play is failed`);
     });
 
     wssNFTContractInstance.events.SoldOut({})
@@ -69,39 +79,49 @@ export const MintPage = ({handleNotification}: PropsType): JSX.Element => {
     .on('data', (event: any) => {
       console.log('Added WhiteList: ', event, event.returnValues);
       handleNotification('success', `${event.returnValues._address} is added to Whitelist`);
+      setIsAddingWhitelist(false);
+    }).on('error', (error:any) => {
+      handleNotification('error', `Adding whitelist is failed`);
+      setIsAddingWhitelist(false);
     });
 
     wssNFTContractInstance.events.RemovedWhiteList({filter: {_to: config.PUBLIC_KEY}})
     .on('data', (event: any) => {
       console.log('Removed WhiteList: ', event, event.returnValues);
       handleNotification('success', `${event.returnValues._address} is removed to Whitelist`);
-    });
+      setIsRemovingWhitelist(false);
+    }).on('error', (error:any) => {
+      handleNotification('error', `Removing whitelist is failed`);
+      setIsRemovingWhitelist(false);
+    });;
 
   }, [provider]);
 
   const mint = useCallback(() => {
     console.log('amount: ', amount);
     setIsMinting(true);
-    mintNFT(web3Instance, nftContractInstance, address, contractAddress, price, amount).then(res => console.log('mint success: ', res)).catch(e => {
-      handleNotification('error', 'NFT minting is failed');
-      setIsMinting(false);
-    });
+    mintNFT(web3Instance, nftContractInstance, address, contractAddress, price, amount).then(res => {
+    }).catch(e => setIsMinting(false));
   }, [provider, amount]);
 
   const withdraw = useCallback(() => {
-    withdrawEth(web3Instance, nftContractInstance, contractAddress);
+    setIsWithdrawing(true);
+    withdrawEth(web3Instance, nftContractInstance, contractAddress).then(res => setIsWithdrawing(false)).catch(e => setIsWithdrawing(false));
   }, [provider]);
   
   const addWhiteListAddress = useCallback(() => {
-    addWhiteList(web3Instance, nftContractInstance, contractAddress, address1);
-  }, [provider]);
+    setIsAddingWhitelist(true);
+    addWhiteList(web3Instance, nftContractInstance, contractAddress, address1).then(res => setIsAddingWhitelist(false)).catch(e => setIsAddingWhitelist(false));
+  }, [provider, address1]);
 
   const removeWhiteListAddress = useCallback(() => {
-    removeWhiteList(web3Instance, nftContractInstance, contractAddress, address1);
-  }, [provider]);
+    setIsRemovingWhitelist(true);
+    removeWhiteList(web3Instance, nftContractInstance, contractAddress, address2).then(res => setIsRemovingWhitelist(false)).catch(e => setIsRemovingWhitelist(false));
+  }, [provider, address2]);
 
   const setPause = useCallback(() => {
-    setPauseSell(web3Instance, nftContractInstance, contractAddress, true);
+    setIsSettingPause(true);
+    setPauseSell(web3Instance, nftContractInstance, contractAddress, true).then(res => setIsSettingPause(false)).catch(e => setIsSettingPause(false));
   }, [provider]);
 
   return (
@@ -160,7 +180,7 @@ export const MintPage = ({handleNotification}: PropsType): JSX.Element => {
                         borderTopColor: 'rgba(66, 54, 0, 0.63)'
                     }
                 }}/>
-              <button className="button button-primary button-wide-mobile button-md" onClick={mint}>Mint</button>
+                <CustomButton text="Mint" onClick={mint} isLoading={isMinting} />
           </div>
           {
             isAdmin && (
@@ -168,20 +188,20 @@ export const MintPage = ({handleNotification}: PropsType): JSX.Element => {
                 <h3>Admin</h3>
                 <div style={{display: 'flex'}}>
                   <div className="btn-layout" style={{margin: '10px'}}>
-                    <button className="button button-primary button-wide-mobile button-sm" onClick={withdraw}>Withdraw</button>
+                    <CustomButton text="Withdraw" onClick={withdraw} isLoading={isWithdrawing} />
                   </div>
                   <div className="btn-layout" style={{margin: '10px'}}>
-                    <button className="button button-primary button-wide-mobile button-sm" onClick={setPause}>Pause/Release</button>
+                    <CustomButton text="Pause/Play" onClick={setPause} isLoading={isSettingPause} />
                   </div>
                 </div>
                 <div style={{display: "flex",flexDirection:'column'}}>
                   <div className="btn-layout" style={{margin: '10px'}}>
                     <input type="text" className="input" value={address1} onChange={(e) => {setAddress1(e.target.value)}}></input>
-                    <button className="button button-primary button-wide-mobile button-sm" onClick={addWhiteListAddress}>Add Whitelist</button>
+                    <CustomButton text="Add to Whitelist" onClick={addWhiteListAddress} isLoading={isAddingWhitelist} />
                   </div>
                   <div className="btn-layout" style={{margin: '10px'}}>
                     <input type="text" className="input" value={address2} onChange={(e) => {setAddress2(e.target.value)}}></input>
-                    <button className="button button-primary button-wide-mobile button-sm" onClick={removeWhiteListAddress}>Remove WhiteList</button>
+                    <CustomButton text="Remove from Whitelist" onClick={removeWhiteListAddress} isLoading={isRemovingWhitelist} />
                   </div> 
                 </div>
               </div>

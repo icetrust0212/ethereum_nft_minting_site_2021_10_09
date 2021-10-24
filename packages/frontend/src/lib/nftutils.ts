@@ -41,6 +41,7 @@ export async function setPauseSell(web3: any, nftContractInstance: any, CONTRACT
 }
 
 export async function addWhiteList(web3: any, nftContractInstance: any, CONTRACT_ADDRESS: string, _address: string) {
+  console.log('whitelist: ', _address)
   const tx = {
     'from': config.PUBLIC_KEY,
     'to': CONTRACT_ADDRESS,

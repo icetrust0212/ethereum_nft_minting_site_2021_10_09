@@ -6,7 +6,7 @@ import '../assets/scss/layout.scss';
 
 const LayoutDefault = ({ children }) => (
   <div className="page-layout">
-    <img src={backgroundImg} className="background" />
+    <img src={backgroundImg} className="background" alt=""/>
     <div className="header-wrapper">
       <Header navPosition="right" className="reveal-from-bottom" />
     </div>

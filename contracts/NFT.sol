@@ -6,9 +6,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
-import "hardhat/console.sol";
+import './ERC2981ContractWideRoyalties.sol';
 
-contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
+contract Iceberg is ERC721Enumerable, ERC2981ContractWideRoyalties, VRFConsumerBase, Ownable {
     using SafeMath for uint256;
 
     uint256 public MAX_ELEMENTS = 8888;
@@ -56,6 +56,7 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
     ) ERC721("ICEBERG", "ICE") VRFConsumerBase(_VRFCoordinator, _LinkToken) {
         setBaseURI(baseURI);
         setMaxElementCount(maxAmount);
+        setRoyalties(creator1Address, 1000);
         VRFCoordinator = _VRFCoordinator;
         LinkToken = _LinkToken;
         keyHash = _keyhash;
@@ -70,6 +71,27 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
     function _baseURI() internal view virtual override returns (string memory) {
         return baseTokenURI;
     }
+
+    /// @inheritdoc	ERC165
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC721Enumerable, ERC2981Base)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
+    
+
+    /// @notice Allows to set the royalties on the contract
+    /// @dev This function in a real contract should be protected with a onlOwner (or equivalent) modifier
+    /// @param recipient the royalties recipient
+    /// @param value royalties value (between 0 and 10000)
+    function setRoyalties(address recipient, uint256 value) public {
+        _setRoyalties(recipient, value);
+    }
+
 
     //init token ids
     function _initTokenIds() internal {
@@ -243,18 +265,18 @@ contract Iceberg is ERC721Enumerable, VRFConsumerBase, Ownable {
     }
 
     //add whitelist
-    function addWhiteList(address _address) public onlyOwner {
-        require(!whiteList[_address], "Already Added");
-        whiteList[_address] = true;
-        emit AddedWhiteList(owner() ,_address);
-    }
-    function isWhiteList(address _address) public view onlyOwner returns(bool) {
-        return whiteList[_address];
-    }
-    //remove whitelist
-    function removeWhiteList(address _address) public onlyOwner {
-        require(whiteList[_address], "Already removed");
-        whiteList[_address] = false;
-        emit RemovedWhiteList(owner(), _address);
-    }
+    // function addWhiteList(address _address) public onlyOwner {
+    //     require(!whiteList[_address], "Already Added");
+    //     whiteList[_address] = true;
+    //     emit AddedWhiteList(owner() ,_address);
+    // }
+    // function isWhiteList(address _address) public view onlyOwner returns(bool) {
+    //     return whiteList[_address];
+    // }
+    // //remove whitelist
+    // function removeWhiteList(address _address) public onlyOwner {
+    //     require(whiteList[_address], "Already removed");
+    //     whiteList[_address] = false;
+    //     emit RemovedWhiteList(owner(), _address);
+    // }
 }

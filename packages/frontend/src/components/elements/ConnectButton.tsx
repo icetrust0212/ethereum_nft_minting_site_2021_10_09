@@ -1,6 +1,5 @@
 import { providers } from 'ethers'
 import { useCallback, useEffect } from 'react';
-import Button from './Button';
 import Web3Modal from 'web3modal'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAddress, getChainId, getProvider, getWeb3Provider } from '../../store/reducers';
@@ -21,7 +20,6 @@ const ConnectButton = () => {
     const provider = useSelector(state => getProvider(state));
     const web3Provider = useSelector(state => getWeb3Provider(state));
     const address = useSelector(state => getAddress(state));
-    const chainId = useSelector(state => getChainId(state));
 
     const connect = useCallback(async function () {
         // This is the initial `provider` that is returned when

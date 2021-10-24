@@ -1,3 +1,4 @@
+@import "https://pro.fontawesome.com/releases/v5.10.0/css/fontawesome.css";
 .mint-container {
     display: flex;
     flex-direction: column;
@@ -46,15 +47,26 @@
             align-items: center;
             margin-top: 20px;
         }
+       
+       
         .btn-mint {
             width:  100px;
             height:  36px;
         }
         input, input:focus {
-            border: none !important
+            border: none !important;
         }
         i {
             background: white !important;
+        }
+    }
+    .button-group {
+        input {
+            height: 36px;
+            margin-right: 10px;
+        }
+        .btn-layout {
+            display: flex;
         }
     }
 

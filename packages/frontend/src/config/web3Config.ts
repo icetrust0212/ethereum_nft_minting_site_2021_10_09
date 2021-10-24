@@ -1,6 +1,17 @@
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import WalletLink from 'walletlink'
-const INFURA_ID = process.env.INFRA_ID;
+const REACT_APP_API_URL_MAINNET = "https://eth-mainnet.alchemyapi.io/v2/OFNLvE3zh5eHRiBh30_DNaiPDVdyhXO0"
+const REACT_APP_API_URL_KOVAN = "https://eth-kovan.alchemyapi.io/v2/XicYTp2d0MFKVFxtY3V6v7zsbMt4QBYd"
+const REACT_APP_API_URL_RINKBY = "https://eth-rinkeby.alchemyapi.io/v2/vAQGLxQXiYIWXYDEjHX_huSpSxhaAJs3"
+const REACT_APP_API_URL_ROPSTEN = "https://eth-ropsten.alchemyapi.io/v2/UokmhuXrRl3zx0KXMOjkxOQJjviawfWl"
+
+const REACT_APP_WSS_URL_MAINNET = "wss://eth-mainnet.alchemyapi.io/v2/OFNLvE3zh5eHRiBh30_DNaiPDVdyhXO0"
+const REACT_APP_WSS_URL_KOVAN = "wss://eth-kovan.alchemyapi.io/v2/XicYTp2d0MFKVFxtY3V6v7zsbMt4QBYd"
+const REACT_APP_WSS_URL_RINKBY = "wss://eth-rinkeby.alchemyapi.io/v2/vAQGLxQXiYIWXYDEjHX_huSpSxhaAJs3"
+const REACT_APP_WSS_URL_ROPSTEN = "wss://eth-ropsten.alchemyapi.io/v2/UokmhuXrRl3zx0KXMOjkxOQJjviawfWl"
+
+const REACT_APP_ACCOUNT_PUBLIC_KEY = "0x1979A0a4dBA88D90b4f1CF9fcD199EA50DE50F74";
+const INFURA_ID = "9aa3d95b3bc440fa88ea12eaa4456161";
 
 export const web3ProviderOptions = {
     walletconnect: {
@@ -33,9 +44,6 @@ export const web3ProviderOptions = {
     },
   }
 
-  const {REACT_APP_API_URL_MAINNET, REACT_APP_API_URL_KOVAN, REACT_APP_API_URL_ROPSTEN, REACT_APP_API_URL_RINKBY} = process.env;
-  const {REACT_APP_WSS_URL_MAINNET, REACT_APP_WSS_URL_KOVAN, REACT_APP_WSS_URL_ROPSTEN, REACT_APP_WSS_URL_RINKBY} = process.env;
-  const {REACT_APP_ACCOUNT_PRIVATE_KEY, REACT_APP_ACCOUNT_PUBLIC_KEY} = process.env;
 
   export const config = {
     MAINNET_API_URL: REACT_APP_API_URL_MAINNET,
@@ -48,6 +56,5 @@ export const web3ProviderOptions = {
     ROPSTEN_WSS_URL: REACT_APP_WSS_URL_ROPSTEN,
     RINKEBY_WSS_URL: REACT_APP_WSS_URL_RINKBY,
     
-    PRIVATE_KEY: REACT_APP_ACCOUNT_PRIVATE_KEY,
     PUBLIC_KEY: REACT_APP_ACCOUNT_PUBLIC_KEY,
   }

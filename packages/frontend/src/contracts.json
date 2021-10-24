@@ -3,7 +3,7 @@
   "chainId": "4",
   "contracts": {
     "Iceberg": {
-      "address": "0xDF528584B780c7396A62E24Af3e33cFAD55146b0",
+      "address": "0x0d2509E505697832eb1cd4884c59d6545d480EeD",
       "abi": [
         {
           "inputs": [
@@ -288,19 +288,6 @@
           "inputs": [
             {
               "internalType": "address",
-              "name": "_address",
-              "type": "address"
-            }
-          ],
-          "name": "addWhiteList",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
               "name": "to",
               "type": "address"
             },
@@ -469,25 +456,6 @@
         {
           "inputs": [
             {
-              "internalType": "address",
-              "name": "_address",
-              "type": "address"
-            }
-          ],
-          "name": "isWhiteList",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
               "internalType": "uint256[]",
               "name": "_tokensId",
               "type": "uint256[]"
@@ -626,19 +594,6 @@
           "type": "function"
         },
         {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "_address",
-              "type": "address"
-            }
-          ],
-          "name": "removeWhiteList",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
           "inputs": [],
           "name": "renounceOwnership",
           "outputs": [],
@@ -661,6 +616,35 @@
           "name": "requestRandomNFT",
           "outputs": [],
           "stateMutability": "payable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            }
+          ],
+          "name": "royaltyInfo",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "receiver",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "royaltyAmount",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -767,6 +751,24 @@
             }
           ],
           "name": "setPause",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            }
+          ],
+          "name": "setRoyalties",
           "outputs": [],
           "stateMutability": "nonpayable",
           "type": "function"

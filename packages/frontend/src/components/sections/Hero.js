@@ -6,7 +6,7 @@ import Button from '../elements/Button';
 import Image from '../elements/Image';
 import Modal from '../elements/Modal';
 import heroImage from './../../assets/images/video-placeholder.jpg';
-import { Link, useLocation, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const propTypes = {
   ...SectionProps.types
@@ -71,7 +71,7 @@ const Hero = ({
                 </p>
               <div className="reveal-from-bottom" data-reveal-delay="600">
                 <ButtonGroup>
-                  <Button tag="a" color="primary" wideMobile href="https://testnets.opensea.io/collection/iceberg-v4" target="_blank">
+                  <Button tag="a" color="primary" wideMobile href="https://testnets.opensea.io/collection/iceberg-yvvewbuvri" target="_blank">
                     View On Opensea
                     </Button>
                   <Link to={`/mint`}>
